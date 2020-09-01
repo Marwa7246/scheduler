@@ -6,10 +6,11 @@ export default function DayListItem(props) {
   console.log(props)
 
   const formatSpots = function(spotsNumber) {
-    let spot = ' spot';
-    if (spotsNumber >1 || spotsNumber ===0 ) spot= spot+'s';
-    const availableSpots = (spotsNumber ?  spotsNumber : 'no')+ spot; 
-    return availableSpots;
+
+    if(spotsNumber === 0) return 'no spots'
+    if(spotsNumber === 1) return '1 spot'
+    if (spotsNumber >1 ) return `${spotsNumber} spots`
+ 
 
   };
 
