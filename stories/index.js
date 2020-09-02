@@ -19,6 +19,8 @@ import Empty from "components/appointment/Empty";
 import Show from "components/appointment/Show";
 import Confirm from "components/appointment/Confirm";
 import Status from "components/appointment/Status";
+import Error from "components/appointment/Error";
+import Form from "components/appointment/Form";
 
 
 const days = [
@@ -98,6 +100,8 @@ storiesOf("DayList", module)
   .add("Tuesday", () => (
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   ));
+
+
 storiesOf("InterviewrListItem", module)
  .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
@@ -122,7 +126,7 @@ storiesOf("InterviewrListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      onChange={event => action("onChange")(interviewer.id)}
+      setInterviewer={event => action("onChange")(interviewer.id)}
     />
   ));
 storiesOf("InterviewerList", module)
@@ -154,3 +158,6 @@ storiesOf("Appointment", module)
   .add('Show', () => <Show {...interviewer} student={student} onEdit={action('onEdit')} onDelete={action('onDelete')}/>) 
   .add('Confirm', () => <Confirm message= "Delete the appointment?" onCancel={action('onCancel')} onConfirm=  {action('onConfirm')}/>) 
   .add('Status', () => <Status message="Deleting"/>) 
+  .add('Error', () => <Error message="Could not delete appointment." onClose={action('onClose')} />) 
+  .add('Form Edit', () => <Form name={student} interviewers={interviewers} interviewer={3} onCancel={action('onCancel')} onSave={action('onSave')} />) 
+
