@@ -1,4 +1,5 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
+import axios from 'axios'
 
 //import DayListItem from "components/DayListItem"
 import DayList from "components/DayList"
@@ -7,24 +8,6 @@ import Appointment from "components/appointment";
 
 import "components/Application.scss";
 
-
- const days = [
-    {
-      id: 1,
-      name: "Monday",
-      spots: 2,
-    },
-    {
-      id: 2,
-      name: "Tuesday",
-      spots: 5,
-    },
-    {
-      id: 3,
-      name: "Wednesday",
-      spots: 0,
-    },
-  ];
 
   const appointments = [
     {
@@ -82,16 +65,36 @@ import "components/Application.scss";
   ];
 
 export default function Application(props) {
- 
-
+  const [days, setDays] = useState([]);
   const [day, setDay] = useState("Monday");
-  console.log("dayState:", day);
+  
+  
+  ////console.log("dayState:", day);
 
   const parsedAppointments = appointments.map(oneAppointment => {
-     console.log(oneAppointment);
+     ////console.log(oneAppointment);
      return (<Appointment key={oneAppointment.id} {...oneAppointment} />)
     })
-      
+    useEffect(() => {
+      ////console.log("Fetching data...");
+  
+      // ajax request to a remote api
+  
+      axios({
+        url: `/api/days`,
+        method: "GET"
+      })
+        .then((response) => {
+          console.log(response.data);
+  
+          setDays(response.data);
+        })
+        .catch((err) => {
+          console.log(err)
+          //setError(err.message);
+          //setLoading(false);
+        });
+    }, []);
 
   return (
     <main className="layout">
