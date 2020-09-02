@@ -15,6 +15,7 @@ import InterviewerList from "components/InterviewerList";
 import { addParameters } from "@storybook/react/dist/client/preview";
 import Appointment from "components/appointment";
 import Header from "components/appointment/Header";
+import Empty from "components/appointment/Empty";
 
 
 const days = [
@@ -146,3 +147,4 @@ storiesOf("Appointment", module)
   .add('Appointment', () => <Appointment/> )
   .add('Appointment with Time', () => <Appointment time='12pm'/> )
   .add('Header', () => <Header time='12pm'/>) 
+  .add('Empty', () => <Empty onAdd={action('onAdd')}/>) 
