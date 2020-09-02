@@ -16,6 +16,7 @@ import { addParameters } from "@storybook/react/dist/client/preview";
 import Appointment from "components/appointment";
 import Header from "components/appointment/Header";
 import Empty from "components/appointment/Empty";
+import Show from "components/appointment/Show";
 
 
 const days = [
@@ -50,7 +51,7 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
-
+const student =  "Lydia Miller-Jones";
 
 
 storiesOf("Button", module)
@@ -147,4 +148,6 @@ storiesOf("Appointment", module)
   .add('Appointment', () => <Appointment/> )
   .add('Appointment with Time', () => <Appointment time='12pm'/> )
   .add('Header', () => <Header time='12pm'/>) 
-  .add('Empty', () => <Empty onAdd={action('onAdd')}/>) 
+  .add('Empty', () => <Empty onAdd={action('onAdd')}/>)
+  .add('Show', () => <Show {...interviewer} student={student} onEdit={action('onEdit')} onDelete={action('onDelete')}/>) 
+ 
