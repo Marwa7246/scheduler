@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import 'components/DayListItem.scss';
 
 export default function DayListItem(props) {
-  console.log(props)
+  //console.log(props)
 
   const formatSpots = function(spotsNumber) {
 

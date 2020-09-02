@@ -9,7 +9,7 @@ import 'components/appointment/styles.scss'
 
 
 export default function Appointment (props) {
-console.log(props)
+//console.log(props)
 const { interviewer, student } = {...props.interview}
 
   return <article className="appointment">

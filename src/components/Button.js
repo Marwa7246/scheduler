@@ -5,11 +5,11 @@ import classnames from 'classnames';
 import "components/Button.scss";
 
 export default function Button(props) {
-   console.log(props);
+   //console.log(props);
 
   const buttonClass = classnames('button', {"button--confirm": props.confirm}, {"button--danger": props.danger })
 
-  console.log('buttonClass:', buttonClass);
+  //console.log('buttonClass:', buttonClass);
 
 
    return (
