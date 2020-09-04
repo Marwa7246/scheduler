@@ -22,12 +22,8 @@ export default function Appointment (props) {
   const initial = props.interview ? SHOW : EMPTY;
   const {mode, transition, back} =  useVisualMode(initial);
 
-const print = function(message) {
-  console.log(message)
 
-}
-
-  //console.log(props)
+  console.log('FROM APPOINTMENT COMPONENETS', props)
   const { interviewer, student } = {...props.interview}
 
   return <article className="appointment">
@@ -35,7 +31,7 @@ const print = function(message) {
     {mode === EMPTY && <Empty onAdd={()=>transition(CREATE)}/>}
 
     {mode === SHOW && <Show {...interviewer} student={student}/> }
-    {mode === CREATE && <Form interviewers={[]} onCancel={()=>back()} /> }
+    {mode === CREATE && <Form interviewers={props.interviewers} onCancel={()=>back()} /> }
 
 
 

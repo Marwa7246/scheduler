@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import DayList from "components/DayList"
 import Appointment from "components/appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getIterviewersForDay } from "helpers/selectors";
 
 import "components/Application.scss";
 
@@ -19,13 +19,17 @@ import "components/Application.scss";
   const setDay = day => setState({...state, day})
   //const setDays = days => setState(prev => ({...prev, days}))
   
-  ////console.log("dayState:", day);
+  //////console.log("dayState:", day);
+
+  const interviewers = getIterviewersForDay(state, state.day);
+  console.log('interviewers', interviewers)
+
 
   const appointments = getAppointmentsForDay(state, state.day);
 
   const schedule = appointments.map(oneAppointment => {
     const newInterview = getInterview(state, oneAppointment.interview);
-    console.log('newInterview:', newInterview)
+    //console.log('newInterview:', newInterview);
     
     // return (<Appointment 
     //   key={oneAppointment.id}
@@ -37,39 +41,13 @@ import "components/Application.scss";
       key={oneAppointment.id}
       {...oneAppointment} 
       interview= {newInterview}
+      interviewers={interviewers}
     />)
-
 
   });
 
+ 
 
-  // const parsedAppointments = appointments.map(oneAppointment => {
-  //   return (<Appointment key={oneAppointment.id} {...oneAppointment} />)
-  // })      
-  
-  // ajax request to a remote api to fetch Days
-
-  // useEffect(() => {    
-  //   axios({
-  //     url: `/api/days`,
-  //     method: "GET"
-  //   })
-  //     .then((response) => {
-  //       console.log(response.data); 
-  //       //setDays(response.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // }, 
-  // []);
-  // useEffect(() => {  
-  //   Promise.all ([
-  //     Promise.resolve(axios({ url: `/api/days`})),
-  //     Promise.resolve(axios({url: `/api/appointments`}))
-  //   ]).then((all) => {console.log(all)})
-  // }, 
-  // []);
 
   useEffect(() => {  
     Promise.all ([
@@ -78,13 +56,14 @@ import "components/Application.scss";
       axios({url: `/api/interviewers`})
 
     ]).then((all) => {
-      console.log('From UserEffect: ', all)
+      //console.log('From UserEffect: ', all)
     setState(prev => ({...prev, days: all[0].data, appointments:all[1].data, interviewers:all[2].data}))
     })
   }, 
   []);
 
-console.log('Schedule:', schedule)
+
+//console.log('Schedule:', schedule)
 
   return (
     <main className="layout">
