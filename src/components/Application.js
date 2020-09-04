@@ -19,29 +19,56 @@ import "components/Application.scss";
   const setDay = day => setState({...state, day})
   //const setDays = days => setState(prev => ({...prev, days}))
   
-  //////console.log("dayState:", day);
 
   const interviewers = getIterviewersForDay(state, state.day);
-  console.log('interviewers', interviewers)
 
+  console.log('interviewers', interviewers);
+
+  function bookInterview(id, interview) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState(prev => ({...prev,  appointments:appointments}))
+    console.log('NEWAPPOINTs', appointments)
+
+      axios({url:`/api/appointments/`, method: 'POST', data: {appointments}})
+        .then(() => {
+        console.log('done')
+      })
+    
+    
+
+    // const interviewerObj= interviewers.find(ele => ele.id===interview.interviewer);
+    // interview = {...interview, interviewer: interviewerObj };
+
+    console.log('bookInterview:', id, interview);
+  }
 
   const appointments = getAppointmentsForDay(state, state.day);
 
   const schedule = appointments.map(oneAppointment => {
-    const newInterview = getInterview(state, oneAppointment.interview);
-    //console.log('newInterview:', newInterview);
+    const interviewFound = getInterview(state, oneAppointment.interview);
     
     // return (<Appointment 
     //   key={oneAppointment.id}
     //   id={oneAppointment.id} 
     //   time={oneAppointment.time}
-    //   interview= {newInterview}
+    //   interview= {interviewFound}
     // />)
     return (<Appointment 
       key={oneAppointment.id}
       {...oneAppointment} 
-      interview= {newInterview}
+      interview= {interviewFound}
       interviewers={interviewers}
+      bookInterview={bookInterview}
+
     />)
 
   });
