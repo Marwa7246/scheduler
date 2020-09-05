@@ -11,7 +11,6 @@ function useApplicationData(){
     day: "Monday",
     days: [],
     appointments: {},
-    spots: 5
   });
 
 
@@ -19,22 +18,14 @@ function useApplicationData(){
      // console.log(state.days )
 
   function changeSpots (state, day, change){
-    const selectedDay = state.days.find(e => e.name===day);
+   // const selectedDay = state.days.find(e => e.name===day);
     const i = state.days.findIndex(e => e.name===day);
-    const y = {...selectedDay, spots: selectedDay.spots-change};
+    const newDay = {...state.days[i], spots: state.days[i].spots-change};
     const allDays = [...state.days];
-    allDays[i] =y;
+    allDays[i] =newDay;
     return allDays;
   }
 
-  // function increaseSpots (state, day){
-  //   const selectedDay = state.days.find(e => e.name===day);
-  //   const i = state.days.findIndex(e => e.name===day);
-  //   const y = {...selectedDay, spots: selectedDay.spots+1};
-  //   const allDays = [...state.days];
-  //   allDays[i] =y;
-  //   return allDays;
-  // }
 
 
   useEffect(() => {  
@@ -66,8 +57,9 @@ function useApplicationData(){
     return axios({url:`/api/appointments/${id}`, method: 'PUT', data: appointment})
       .then(() => {
       console.log('done');
-      setState(prev => ({...prev,  appointments, days: days}));
-    })
+      setState(prev => ({...prev,  appointments, days}));
+      });
+      //.catch((err)=> console.log(err));
 
   }
 
@@ -84,6 +76,8 @@ function useApplicationData(){
         console.log('deleted successfully');
         setState(prev => ({...prev, appointments, days}));
       });
+      //.catch((err)=> console.log(err));
+
 
 
 
