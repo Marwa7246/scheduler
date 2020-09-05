@@ -21,23 +21,23 @@ test("useVisualMode should transition to another mode", () => {
 
 test("useVisualMode should return to previous mode", () => {
   const { result } = renderHook(() => useVisualMode(FIRST));
-  console.log('AFTER INITIAL:', result.current)
+  //console.log('AFTER INITIAL:', result.current)
 
 
   act(() => result.current.transition(SECOND));
-  console.log('AFTER 1st PUSH:', result.current)
+  //console.log('AFTER 1st PUSH:', result.current)
   expect(result.current.mode).toBe(SECOND);
 
   act(() => result.current.transition(THIRD));
-  console.log('AFTER 2st PUSH:',result.current)
+  //console.log('AFTER 2st PUSH:',result.current)
   expect(result.current.mode).toBe(THIRD);
 
   act(() => result.current.back());
-  console.log('AFTER 1st POP:',result.current)
+  //console.log('AFTER 1st POP:',result.current)
   expect(result.current.mode).toBe(SECOND);
 
   act(() => result.current.back());
-  console.log('AFTER 2st POP:',result.current)
+  //console.log('AFTER 2st POP:',result.current)
   expect(result.current.mode).toBe(FIRST);
 
 
