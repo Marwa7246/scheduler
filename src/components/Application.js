@@ -14,62 +14,6 @@ import "components/Application.scss";
 
   const {state, setDay, bookInterview, cancelInterview} = useApplicationData();
 
-{
-  // const [state, setState] = useState({
-  //   day: "Monday",
-  //   days: [],
-  //   appointments: {}
-  // });
-  
-  // const setDay = day => setState({...state, day})
-
-
-
-  // function bookInterview(id, interview) {
-
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: { ...interview }
-  //   };
-
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-
-  //   //console.log('NEWAPPOINTs', appointments)
-  //   //console.log('bookInterview:', id, interview);
-
-  //     return axios({url:`/api/appointments/${id}`, method: 'PUT', data: appointment})
-  //       .then(() => {
-  //       console.log('done');
-  //       setState(prev => ({...prev,  appointments:appointments}));
-  //     })
-  
-  // }
-
-  // function cancelInterview (id) {
-
-  //   return axios({url:`/api/appointments/${id}`, method:'DELETE'})
-  //     .then(()=> console.log('deleted successfully'))
-
-
-  // }
-
-  // useEffect(() => {  
-  //   Promise.all ([
-  //     axios({ url: `/api/days`}),
-  //     axios({url: `/api/appointments`}),
-  //     axios({url: `/api/interviewers`})
-
-  //   ]).then((all) => {
-  //       setState(prev => ({...prev, days: all[0].data, appointments:all[1].data, interviewers:all[2].data}))
-  //     })
-  // }, 
-  // []);
-}
-
-
   const interviewers = getIterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day);
@@ -92,10 +36,6 @@ import "components/Application.scss";
   });
 
  
-
-
-
-
   return (
     <main className="layout">
       <section className="sidebar">
