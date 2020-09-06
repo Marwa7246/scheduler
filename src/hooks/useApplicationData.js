@@ -2,23 +2,10 @@ import {useReducer, useEffect} from 'react';
 
 import axios from 'axios'
 
-
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
-function changeSpots (state, action) {
-  const days = state.days.map((item) => {       
-    if (item.name===state.day && !action.interview) {
-      return {...item, spots: item.spots+1 }
-    } 
-    if (item.name===state.day && action.interview && !state.appointments[action.id].interview) {
-      return {...item, spots: item.spots-1 } 
-    }       
-    return item
-  })
-  return days;
-}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -32,9 +19,16 @@ function reducer(state, action) {
       const appointment = {...state.appointments[action.id], interview: action.interview};
       const appointments = { ...state.appointments, [action.id]: appointment};
       
-      const days = changeSpots (state, action)
+      const days = state.days.map((item) => {       
+        if (item.appointments.includes(action.id)) {
+          const spots = item.appointments.map(appointId => appointments[appointId]).filter(app => !app.interview).length;
+          console.log('spots:', spots);
+          return {...item, spots};
+        }         
+        return item;
+      })
 
-      return {...state, appointments, days}
+      return {...state, appointments, days};
     }
     default:
       throw new Error(
@@ -42,6 +36,7 @@ function reducer(state, action) {
       );
   }
 }
+
 function useApplicationData(){
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
@@ -51,6 +46,23 @@ function useApplicationData(){
 
   const setDay = day => dispatch({ type: SET_DAY, day });;
 
+useEffect(() => {
+  const socket = new WebSocket("ws://localhost:8001");
+  socket.onopen = function (event) {
+    socket.send("ping");
+  };
+
+  socket.onmessage = function (event) {
+    const message = JSON.parse(event.data);
+    console.log(`Message Received: ${message.interview}`)
+    if (message.type === "SET_INTERVIEW") {
+      console.log('SET INTERVIEW RECEIVED');
+      dispatch({ type: SET_INTERVIEW, id: message.id, interview: message.interview });
+    }
+  }
+
+}, []);
+
 
   useEffect(() => {  
     Promise.all ([
@@ -59,11 +71,8 @@ function useApplicationData(){
       axios({url: `/api/interviewers`})
 
     ]).then((all) => {
-      const days = all[0].data;
-      const appointments = all[1].data;
-      const interviewers = all[2].data;
 
-      dispatch({ type: SET_APPLICATION_DATA, days, appointments, interviewers});
+      dispatch({ type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data});
         
       })
   }, 
