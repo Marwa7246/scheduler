@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Header from "components/appointment/Header";
 import Empty from "components/appointment/Empty";
@@ -50,13 +50,23 @@ export default function Appointment (props) {
 
   }
 
-  const { interviewer, student } = {...props.interview}
+  const { interviewer, student } = {...props.interview};
   //console.log(props.interview)
+
+  useEffect(() => {
+    if (mode === EMPTY && props.interview){
+      transition(SHOW);
+    } else if (mode === SHOW && !props.interview){
+      transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
+
+
 
   return <article className="appointment">
     <Header time={props.time}/>
     {mode === EMPTY && <Empty onAdd={()=>transition(CREATE)}/>}
-    {mode === SHOW    && <Show {...interviewer} student={student} onDelete={() => transition(CONFIRM)}  onEdit={() => transition(EDIT)}/>}
+    {mode === SHOW  && props.interview && <Show {...interviewer} student={student} onDelete={() => transition(CONFIRM)}  onEdit={() => transition(EDIT)}/>}
     {mode === CREATE  && <Form interviewers={props.interviewers} onCancel={()=>back()} onSave={save}/> }
     {mode === SAVING  && <Status message="Saving..."/>}
     {mode === DELETING  && <Status message="Deleting..."/>}
