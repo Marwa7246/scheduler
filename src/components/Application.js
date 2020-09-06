@@ -1,12 +1,9 @@
-import React, { useState, useEffect }  from "react";
-import axios from 'axios'
+import React from "react";
 
 import DayList from "components/DayList"
 import Appointment from "components/appointment";
 import { getAppointmentsForDay, getInterview, getIterviewersForDay } from "helpers/selectors";
 import useApplicationData from '../hooks/useApplicationData'
-
-
 
 import "components/Application.scss";
 
@@ -17,10 +14,7 @@ import "components/Application.scss";
   const interviewers = getIterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day);
-  // console.log('getAppointmentsForDay', appointments)
-  // const appWithInterview = appointments.filter(elem => elem.interview);
-  // console.log('spots', appointments.length-appWithInterview.length)
-
+  
   const schedule = appointments.map(oneAppointment => {
     const interviewFound = getInterview(state, oneAppointment.interview);
     

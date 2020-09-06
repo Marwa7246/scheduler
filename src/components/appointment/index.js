@@ -1,4 +1,3 @@
-//import React, { useEffect } from 'react';
 import React from 'react';
 
 import Header from "components/appointment/Header";
@@ -9,13 +8,7 @@ import Status from "components/appointment/Status";
 import Confirm from "components/appointment/Confirm";
 import Error from "components/appointment/Error";
 
-
-
-
-
-
 import useVisualMode from "hooks/useVisualMode";
-
 
 import 'components/appointment/styles.scss'
 
@@ -57,7 +50,6 @@ export default function Appointment (props) {
 
   }
 
-  //console.log('FROM APPOINTMENT COMPONENETS', props)
   const { interviewer, student } = {...props.interview}
   //console.log(props.interview)
 
@@ -72,13 +64,6 @@ export default function Appointment (props) {
     {mode === EDIT && <Form interviewers={props.interviewers} interviewer={interviewer && interviewer.id} name={student} onCancel={()=>back()} onSave={save}/>}
     {mode === ERROR_DELETE && <Error  message="Could not delete appointment." onClose={()=> back()}/>}
     {mode === ERROR_SAVE && <Error  message="Could not save appointment." onClose={()=> back()}/>}
-
-
-
-
-
-
-
 
   </article>
 }
