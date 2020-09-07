@@ -1,7 +1,7 @@
 import React from "react";
 
 import DayList from "components/DayList"
-import Appointment from "components/appointment";
+import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getIterviewersForDay } from "helpers/selectors";
 import useApplicationData from '../hooks/useApplicationData'
 

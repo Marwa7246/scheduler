@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 
-import Header from "components/appointment/Header";
-import Empty from "components/appointment/Empty";
-import Show from "components/appointment/Show";
-import Form from "components/appointment/Form";
-import Status from "components/appointment/Status";
-import Confirm from "components/appointment/Confirm";
-import Error from "components/appointment/Error";
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Form from "components/Appointment/Form";
+import Status from "components/Appointment/Status";
+import Confirm from "components/Appointment/Confirm";
+import Error from "components/Appointment/Error";
 
 import useVisualMode from "hooks/useVisualMode";
 
-import 'components/appointment/styles.scss'
+import 'components/Appointment/styles.scss'
 
 
 const EMPTY = "EMPTY";
@@ -51,7 +51,6 @@ export default function Appointment (props) {
   }
 
   const { interviewer, student } = {...props.interview};
-  //console.log(props.interview)
 
   useEffect(() => {
     if (mode === EMPTY && props.interview){
