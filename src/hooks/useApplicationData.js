@@ -2,41 +2,44 @@ import {useReducer, useEffect} from 'react';
 
 import axios from 'axios'
 
+
+function useApplicationData(){
+
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
 
-function reducer(state, action) {
-  switch (action.type) {
-    case SET_DAY: { 
-      return {...state, day: action.day}
-    }
-    case SET_APPLICATION_DATA: {
-      return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
-    }
-    case SET_INTERVIEW: {
-      const appointment = {...state.appointments[action.id], interview: action.interview};
-      const appointments = { ...state.appointments, [action.id]: appointment};
-      
-      const days = state.days.map((item) => {       
-        if (item.appointments.includes(action.id)) {
-          const spots = item.appointments.map(appointId => appointments[appointId]).filter(app => !app.interview).length;
-          return {...item, spots};
-        }         
-        return item;
-      })
 
-      return {...state, appointments, days};
+  function reducer(state, action) {
+    switch (action.type) {
+      case SET_DAY: { 
+        return {...state, day: action.day}
+      }
+      case SET_APPLICATION_DATA: {
+        return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
+      }
+      case SET_INTERVIEW: {
+        const appointment = {...state.appointments[action.id], interview: action.interview};
+        const appointments = { ...state.appointments, [action.id]: appointment};
+        
+        const days = state.days.map((item) => {       
+          if (item.appointments.includes(action.id)) {
+            const spots = item.appointments.map(appointId => appointments[appointId]).filter(app => !app.interview).length;
+            return {...item, spots};
+          }         
+          return item;
+        })
+
+        return {...state, appointments, days};
+      }
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
     }
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
   }
-}
 
-function useApplicationData(){
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
@@ -46,7 +49,7 @@ function useApplicationData(){
   const setDay = day => dispatch({ type: SET_DAY, day });;
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8001");
+    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
     socket.onopen = function (event) {
     socket.send("ping");
   };
@@ -56,6 +59,7 @@ function useApplicationData(){
     if (message.type === "SET_INTERVIEW") {
       dispatch({ type: SET_INTERVIEW, id: message.id, interview: message.interview });
     }
+
   }
 
   }, []);
