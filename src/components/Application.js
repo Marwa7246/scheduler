@@ -55,7 +55,6 @@ import "components/Application.scss";
       />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
         {schedule}
         <Appointment key="last" id="last" time="5pm" />
       </section>

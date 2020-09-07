@@ -22,7 +22,6 @@ function reducer(state, action) {
       const days = state.days.map((item) => {       
         if (item.appointments.includes(action.id)) {
           const spots = item.appointments.map(appointId => appointments[appointId]).filter(app => !app.interview).length;
-          console.log('spots:', spots);
           return {...item, spots};
         }         
         return item;
@@ -46,22 +45,20 @@ function useApplicationData(){
 
   const setDay = day => dispatch({ type: SET_DAY, day });;
 
-useEffect(() => {
-  const socket = new WebSocket("ws://localhost:8001");
-  socket.onopen = function (event) {
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:8001");
+    socket.onopen = function (event) {
     socket.send("ping");
   };
 
   socket.onmessage = function (event) {
     const message = JSON.parse(event.data);
-    console.log(`Message Received: ${message.interview}`)
     if (message.type === "SET_INTERVIEW") {
-      console.log('SET INTERVIEW RECEIVED');
       dispatch({ type: SET_INTERVIEW, id: message.id, interview: message.interview });
     }
   }
 
-}, []);
+  }, []);
 
 
   useEffect(() => {  
@@ -87,7 +84,6 @@ useEffect(() => {
    
     return axios({url:`/api/appointments/${id}`, method: 'PUT', data: appointment})
       .then(() => {
-      console.log('done');
       dispatch({ type: SET_INTERVIEW, id, interview });
       });
   }
@@ -96,7 +92,7 @@ useEffect(() => {
 
     return axios({url:`/api/appointments/${id}`, method:'DELETE'})
       .then(()=> {
-        console.log('deleted successfully');
+        //console.log('deleted successfully');
         dispatch({ type: SET_INTERVIEW, id, interview: null });
       });
   }
