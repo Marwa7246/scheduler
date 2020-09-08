@@ -67,12 +67,10 @@ const SET_INTERVIEW = "SET_INTERVIEW";
 
   useEffect(() => {  
     Promise.all ([
-      axios({ url: `/api/days`}),
-      axios({url: `/api/appointments`}),
-      axios({url: `/api/interviewers`})
-
+      axios.get(`/api/days`),
+      axios.get(`/api/appointments`),
+      axios.get(`/api/interviewers`)
     ]).then((all) => {
-
       dispatch({ type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data});
         
       })
@@ -86,7 +84,7 @@ const SET_INTERVIEW = "SET_INTERVIEW";
       interview: { ...interview }
     };  
    
-    return axios({url:`/api/appointments/${id}`, method: 'PUT', data: appointment})
+    return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview });
       });
@@ -94,7 +92,7 @@ const SET_INTERVIEW = "SET_INTERVIEW";
 
   function cancelInterview (id) {
 
-    return axios({url:`/api/appointments/${id}`, method:'DELETE'})
+    return axios.delete(`/api/appointments/${id}`)
       .then(()=> {
         //console.log('deleted successfully');
         dispatch({ type: SET_INTERVIEW, id, interview: null });
