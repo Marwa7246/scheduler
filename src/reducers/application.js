@@ -5,9 +5,9 @@ const SET_INTERVIEW = "SET_INTERVIEW";
 //use reducer to handle different actions to set the day, the application data, and to update an interview for an appointment time.
 export default function reducer(state, action) {
   switch (action.type) {
-    case SET_DAY: {
-      return { ...state, day: action.day };
-    }
+    // case SET_DAY: {
+    //   return { ...state, day: action.day };
+    // }
     case SET_APPLICATION_DATA: {
       return {
         ...state,
