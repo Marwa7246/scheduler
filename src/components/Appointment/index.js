@@ -62,17 +62,20 @@ export default function Appointment (props) {
 
 
 
-  return <article className="appointment">
-    <Header time={props.time}/>
-    {mode === EMPTY && <Empty onAdd={()=>transition(CREATE)}/>}
-    {mode === SHOW  && props.interview && <Show {...interviewer} student={student} onDelete={() => transition(CONFIRM)}  onEdit={() => transition(EDIT)}/>}
-    {mode === CREATE  && <Form interviewers={props.interviewers} onCancel={()=>back()} onSave={save}/> }
-    {mode === SAVING  && <Status message="Saving..."/>}
-    {mode === DELETING  && <Status message="Deleting..."/>}
-    {mode === CONFIRM  && <Confirm message= "Delete the appointment?"  onCancel={()=>back()} onConfirm={destroy}/>}
-    {mode === EDIT && <Form interviewers={props.interviewers} interviewer={interviewer && interviewer.id} name={student} onCancel={()=>back()} onSave={save}/>}
-    {mode === ERROR_DELETE && <Error  message="Could not delete appointment." onClose={()=> back()}/>}
-    {mode === ERROR_SAVE && <Error  message="Could not save appointment." onClose={()=> back()}/>}
+  return (
+  
+    <article data-testid="appointment" className="appointment">
+      <Header time={props.time}/>
+      {mode === EMPTY && <Empty onAdd={()=>transition(CREATE)}/>}
+      {mode === SHOW  && props.interview && <Show {...interviewer} student={student} onDelete={() => transition(CONFIRM)}  onEdit={() => transition(EDIT)}/>}
+      {mode === CREATE  && <Form interviewers={props.interviewers} onCancel={()=>back()} onSave={save}/> }
+      {mode === SAVING  && <Status message="Saving..."/>}
+      {mode === DELETING  && <Status message="Deleting..."/>}
+      {mode === CONFIRM  && <Confirm message= "Delete the appointment?"  onCancel={()=>back()} onConfirm={destroy}/>}
+      {mode === EDIT && <Form interviewers={props.interviewers} interviewer={interviewer && interviewer.id} name={student} onCancel={()=>back()} onSave={save}/>}
+      {mode === ERROR_DELETE && <Error  message="Could not delete appointment." onClose={()=> back()}/>}
+      {mode === ERROR_SAVE && <Error  message="Could not save appointment." onClose={()=> back()}/>}
 
-  </article>
+    </article>
+  )
 }
