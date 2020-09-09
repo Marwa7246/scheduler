@@ -1,31 +1,32 @@
-import React from 'react';
+import React from "react";
 
-export default function Show (props) {
-
-//console.log(props)
+//Component to show the details of the booked appointment
+export default function Show(props) {
   return (
-    <main className="appointment__card appointment__card--show" >
-      <section className="appointment__card-left" >
+    <main className="appointment__card appointment__card--show">
+      <section className="appointment__card-left">
         <h2 className="text--light">{props.student}</h2>
         <section className="interviewer">
           <h4 className="text--light">interviewer</h4>
           <h3 className="text--regular">{props.name}</h3>
         </section>
       </section>
-      <section className="appointment__card-right" >
-        <section className="appointment__actions" >
-          <img className="appointment__actions-button"
+      <section className="appointment__card-right">
+        <section className="appointment__actions">
+          <img
+            className="appointment__actions-button"
             src="images/edit.png"
             alt="Edit"
-            onClick = {props.onEdit}
-            />
-          <img className="appointment__actions-button"
+            onClick={props.onEdit}
+          />
+          <img
+            className="appointment__actions-button"
             src="images/trash.png"
             alt="Delete"
-            onClick = {props.onDelete}
+            onClick={props.onDelete}
           />
         </section>
-      </section>      
+      </section>
     </main>
-  )
+  );
 }

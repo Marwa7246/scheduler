@@ -52,7 +52,7 @@ describe("Form", () => {
         onSave={onSave}
       />
     );
-    fireEvent.click(getByText('Save'));
+    fireEvent.click(getByText("Save"));
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
     expect(onSave).not.toHaveBeenCalled();
 
@@ -60,7 +60,7 @@ describe("Form", () => {
     const input = getByPlaceholderText("Enter Student Name");
     fireEvent.change(input, {target: { value: "Lydia Miller-Jones"}});    
     
-    fireEvent.click(getByText('Save'));
+    fireEvent.click(getByText("Save"));
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
   
     expect(onSave).toHaveBeenCalledTimes(1);  

@@ -1,18 +1,17 @@
 import React from "react";
-import classnames from 'classnames';
-
+import classnames from "classnames";
 
 import "components/Button.scss";
 
+//Component for confirm/save/cancel buttons
 export default function Button(props) {
-   //console.log(props);
+  const buttonClass = classnames(
+    "button",
+    { "button--confirm": props.confirm },
+    { "button--danger": props.danger }
+  );
 
-  const buttonClass = classnames('button', {"button--confirm": props.confirm}, {"button--danger": props.danger })
-
-  //console.log('buttonClass:', buttonClass);
-
-
-   return (
+  return (
     <button
       className={buttonClass}
       onClick={props.onClick}
@@ -22,4 +21,3 @@ export default function Button(props) {
     </button>
   );
 }
-

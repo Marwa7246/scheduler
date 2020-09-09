@@ -3,10 +3,11 @@ import React from "react";
 import DayList from "components/DayList"
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getIterviewersForDay } from "helpers/selectors";
-import useApplicationData from '../hooks/useApplicationData'
+import useApplicationData from "../hooks/useApplicationData"
 
 import "components/Application.scss";
 
+// Main app Component. Show the nav bar with the days and spots remaining, and the appointment booked and available for the selected day
  export default function Application(props) {
 
   const {state, setDay, bookInterview, cancelInterview} = useApplicationData();
