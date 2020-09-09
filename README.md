@@ -7,9 +7,9 @@ Babel, WebSockets, Axios, Webpack Dev Server, Jest, Testing Library, Cypress, pr
 
 ## Final Product
 
-!["screenshot of scheduler home page"]()
-!["screenshot of editing/creating appointment"]()
-!["screenshot of deleting appointment"]()
+!["screenshot of scheduler home page"](https://github.com/Marwa7246/scheduler/blob/master/docs/scheuler_home.png?raw=true)
+!["screenshot of editing/creating appointment"](https://github.com/Marwa7246/scheduler/blob/master/docs/editing-appointment.png?raw=true)
+!["screenshot of deleting appointment"](https://github.com/Marwa7246/scheduler/blob/master/docs/deleting-appointment.png?raw=true)
 
 ## Setup
 
