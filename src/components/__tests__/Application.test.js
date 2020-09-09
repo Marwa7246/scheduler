@@ -107,7 +107,6 @@ describe('Application', () => {
       await waitForElement(() => getByAltText(bookedAppoint, /add/i));
       
       //await waitForElementToBeRemoved(() => queryByText(bookedAppoint, /deleting/i))
-        console.log(prettyDOM(bookedAppoint))
     
       // 8-Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
       
@@ -120,54 +119,45 @@ describe('Application', () => {
 
   /* test number four */
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
-  // 1- Render the Application.
-  const { container, debug } = render (<Application />);
+    // 1- Render the Application.
+    const { container, debug } = render (<Application />);
+    
+    // 2-Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(()=> getByText(container, "Archie Cohen"));
+    const appointments = getAllByTestId(container, 'appointment');
   
-  // 2-Wait until the text "Archie Cohen" is displayed.
-   await waitForElement(()=> getByText(container, "Archie Cohen"));
-   const appointments = getAllByTestId(container, 'appointment');
-
-  
-  
-  //3-Click the "edit" button on the appointment that contains "Archie Cohen".
-   const bookedAppoint = appointments.find(item => queryByText(item, "Archie Cohen"));
+    //3-Click the "edit" button on the appointment that contains "Archie Cohen".
+    const bookedAppoint = appointments.find(item => queryByText(item, "Archie Cohen"));
     fireEvent.click(getByAltText(bookedAppoint, /edit/i));
 
     //click cancel and expect to get the edit icon again
     fireEvent.click(getByText(bookedAppoint, /cancel/i));
     expect(getByAltText(bookedAppoint, /edit/i)).toBeInTheDocument();
+    fireEvent.click(getByAltText(bookedAppoint, /edit/i));
 
  
-  // 4-Check that the element with the placeholder "Archie Cohen" is displayed.
-  expect(getByPlaceholderText(bookedAppoint, /Enter Student Name/i)).toBeInTheDocument();
+    // 4-Check that the element with the placeholder "Archie Cohen" is displayed.
+    expect(getByPlaceholderText(bookedAppoint, /Enter Student Name/i)).toBeInTheDocument();
+    const input = (getByPlaceholderText(bookedAppoint, /Enter Student Name/i));  
 
-  const input = (getByPlaceholderText(bookedAppoint, /Enter Student Name/i));
-  
-
-  //expect(getByDisplayValue(input, "Archie Cohen")).toBeInTheDocument();
-
-
-  // 5-Click the "save" button after changing the name of the student.
-  fireEvent.change(input, {target: {value: 'Chad Takahashi'}});
-
-  fireEvent.click(getByText(bookedAppoint, /save/i));
+    // 5-Click the "save" button after changing the name of the student.
+    fireEvent.change(input, {target: {value: 'Chad Takahashi'}});
+    fireEvent.click(getByText(bookedAppoint, /save/i));
 
  
-  // 6-Check that the element with the text "Saving" is displayed.
+    // 6-Check that the element with the text "Saving" is displayed.
     expect(getByText(bookedAppoint, /Saving/i)).toBeInTheDocument();
 
-  // 7-Wait until the element with the text "saving" is removed/ or wait until an element with "Chad Takahashi" is in the appointment.
-  //await waitForElement(() => getByText(bookedAppoint, /Chad Takahashi/i));
+    // 7-Wait until the element with the text "saving" is removed/ or wait until an element with "Chad Takahashi" is in the appointment.
+    //await waitForElement(() => getByText(bookedAppoint, /Chad Takahashi/i));
   
-  await waitForElementToBeRemoved(() => queryByText(bookedAppoint, /saving/i))
+    await waitForElementToBeRemoved(() => queryByText(bookedAppoint, /saving/i))
 
-  //8-Check that the DayListItem with the text "Monday" also has the text "1 spots remaining".
-  
-   const day = getAllByTestId(container, "day");
-  
-  const selectedDay = day.find(item=> queryByText(item, "Monday"));
-  expect(getByText(selectedDay, /1 spot remaining/i)).toBeInTheDocument();
-      console.log(prettyDOM(bookedAppoint))
+    //8-Check that the DayListItem with the text "Monday" also has the text "1 spots remaining".
+    
+    const day = getAllByTestId(container, "day");    
+    const selectedDay = day.find(item=> queryByText(item, "Monday"));
+    expect(getByText(selectedDay, /1 spot remaining/i)).toBeInTheDocument();
 
   }); 
   
@@ -209,7 +199,6 @@ describe('Application', () => {
 
     // 10-Check that Form with the input placeholder is shown again.
     expect(getByPlaceholderText(appointment, /enter student name/i)).toBeInTheDocument();
-    console.log(prettyDOM(appointment))
         
   });
 
@@ -257,18 +246,59 @@ describe('Application', () => {
     // 8-Check that the bookedappointment has the "Archie Cohen" element and "Monday" still has "1 spot remaining".
 
     expect(getByText(bookedAppoint, /Archie Cohen/i)).toBeInTheDocument();
-    console.log(prettyDOM(bookedAppoint));
 
     const day = getAllByTestId(container, "day");
     const selectedDay = day.find(item=> queryByText(item, "Monday"));
     expect(getByText(selectedDay, /1 spot remaining/i)).toBeInTheDocument();
     
-});
+  });
+    
+  it("loads data, load create an interview then revert changes by clicking 'cancel'", async () => {
+  // 1- Render the Application.
+  const { container, debug } = render (<Application />);
+
+  // 2-Wait until the text "Archie Cohen" is displayed.
+  await waitForElement(()=> getByText(container, "Archie Cohen"));
+  const appointment = getAllByTestId(container, 'appointment')[0];
+
+  // // 3-Click the "Add" button on the first empty appointment.
+
+  fireEvent.click(getByAltText(appointment, /Add/i));
+
+  
+  const input = getByPlaceholderText(appointment, /enter student name/i);
+
+  // 4-Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".
+
+  fireEvent.change(input, {target: {value: "Lydia Miller-Jones"}});
+
+  // 5-Click the first interviewer in the list.
+  fireEvent.click(getByAltText(appointment, /Sylvia Palmer/i));
+
+  // 6-Click the "cancel" button on that same appointment.
+  fireEvent.click(getByText(appointment, /cancel/i));
+
+
+  // 7-Check the element with icon "add" is displayed.
+  expect(getByAltText(appointment, /add/i)).toBeInTheDocument();
+
+  // 8-Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
+
+  const day = getAllByTestId(container, "day");
+
+  const selectedDay = day.find(item=> queryByText(item, "Monday"));
+  expect(getByText(selectedDay, /1 spot remaining/i)).toBeInTheDocument();
+
+  });
+
+
+  
 
 
 
  
 })
+
 
 
 
