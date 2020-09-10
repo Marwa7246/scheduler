@@ -9,7 +9,7 @@ Babel, WebSockets, Axios, Webpack Dev Server, Jest, Testing Library, Cypress, pr
 
 Check it out [here](https://quizzical-heyrovsky-2b1ec0.netlify.app/)
 
-If the appointments are not showing, please click [here] first (https://scheduler-lhl-2020.herokuapp.com/api/days)
+If the appointments are not showing, please click [here] (https://scheduler-lhl-2020.herokuapp.com/api/days) first.
 
 !["screenshot of scheduler home page"](https://github.com/Marwa7246/scheduler/blob/master/docs/scheuler_home.png?raw=true)
 !["screenshot of editing/creating appointment"](https://github.com/Marwa7246/scheduler/blob/master/docs/editing-appointment.png?raw=true)
