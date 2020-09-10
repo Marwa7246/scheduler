@@ -7,6 +7,7 @@ Babel, WebSockets, Axios, Webpack Dev Server, Jest, Testing Library, Cypress, pr
 
 ## Final Product
 
+Check it out [here](https://quizzical-heyrovsky-2b1ec0.netlify.app/):
 !["screenshot of scheduler home page"](https://github.com/Marwa7246/scheduler/blob/master/docs/scheuler_home.png?raw=true)
 !["screenshot of editing/creating appointment"](https://github.com/Marwa7246/scheduler/blob/master/docs/editing-appointment.png?raw=true)
 !["screenshot of deleting appointment"](https://github.com/Marwa7246/scheduler/blob/master/docs/deleting-appointment.png?raw=true)
@@ -43,15 +44,21 @@ from scheduler root directory: npm run cypress
 
 ## Dependencies
 
-react
-react-dom
-classnames
-normalize.css
-@babel/core
-@testing-library/jest-dom
-@storybook/react
-node-sass
-axios
-@testing-library/react-hooks
-react-test-renderer
-prop-types
+- react
+- react-dom
+- classnames
+- normalize.css
+- @babel/core
+- @testing-library/jest-dom
+- @storybook/react
+- node-sass
+- axios
+- @testing-library/react-hooks
+- react-test-renderer
+- prop-types
+
+## Deploy
+
+- Deploy the server to Heroku
+- Implement Continuous Pipeline by connecting CircleCI to GitHub
+- Deploy the client to Netlify
