@@ -19,8 +19,35 @@
     color: darken($white, 5%);
   }
 
+  &__separator2 {
+    width: 90%;
+    margin: $spacing 0;
+    border: none;
+    color: darken($white, 5%);
+  }
+
   &__menu {
     flex: 1;
+  }
+
+  &__dashboard {
+    font-size: 1.5rem;
+    color: white;
+    // padding: 1em 1em 1em 1em;
+    font-weight: bold;
+    height: 5rem;
+    padding-left: 2rem;
+    padding-right: 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__dashboard:hover {
+    background-color: chocolate;
+    color: blanchedalmond;
+    cursor: pointer;
+
   }
 
   &__lhl {

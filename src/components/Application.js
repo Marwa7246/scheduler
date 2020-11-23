@@ -1,59 +1,73 @@
 import React from "react";
 
-import DayList from "components/DayList"
+import DayList from "components/DayList";
+import Button from "components/Button";
+
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview, getIterviewersForDay } from "helpers/selectors";
-import useApplicationData from "../hooks/useApplicationData"
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getIterviewersForDay,
+} from "helpers/selectors";
+import useApplicationData from "../hooks/useApplicationData";
 
 import "components/Application.scss";
 
 // Main app Component. Show the nav bar with the days and spots remaining, and the appointment booked and available for the selected day
- export default function Application(props) {
-
-  const {state, setDay, bookInterview, cancelInterview} = useApplicationData();
+export default function Application(props) {
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview,
+  } = useApplicationData();
 
   const interviewers = getIterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day);
-  
-  const schedule = appointments.map(oneAppointment => {
-    const interviewFound = getInterview(state, oneAppointment.interview);
-    
-    return (<Appointment 
-      key={oneAppointment.id}
-      {...oneAppointment} 
-      interview= {interviewFound}
-      interviewers={interviewers}
-      bookInterview={bookInterview}
-      cancelInterview={cancelInterview}
-    />)
 
+  const schedule = appointments.map((oneAppointment) => {
+    const interviewFound = getInterview(state, oneAppointment.interview);
+
+    return (
+      <Appointment
+        key={oneAppointment.id}
+        {...oneAppointment}
+        interview={interviewFound}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
+    );
   });
 
- 
   return (
     <main className="layout">
       <section className="sidebar">
-      <img
-        className="sidebar--centered"
-        src="images/logo.png"
-        alt="Interview Scheduler"
-      />
-      <hr className="sidebar__separator sidebar--centered" />
-      <nav className="sidebar__menu">
-
-        <DayList
-          days={state.days}
-          day={state.day}
-          setDay = {setDay}
+        <img
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
         />
+        <hr className="sidebar__separator sidebar--centered" />
+        <nav className="sidebar__menu">
+          <a className="sidebar__dashboard" href="http://localhost:9000/">
+            {/* <img
+              className="sidebar--image"
+              src="images/dashboard.jpg"
+              alt="Interview Scheduler"
+            /> */}
+            Dashboard
+          </a>
+          <hr className="sidebar__separator2 sidebar--centered" />
 
-      </nav>
-      <img
-        className="sidebar__lhl sidebar--centered"
-        src="images/lhl.png"
-        alt="Lighthouse Labs"
-      />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
+        </nav>
+        <img
+          className="sidebar__lhl sidebar--centered"
+          src="images/lhl.png"
+          alt="Lighthouse Labs"
+        />
       </section>
       <section className="schedule">
         {schedule}
@@ -62,5 +76,3 @@ import "components/Application.scss";
     </main>
   );
 }
-
-
