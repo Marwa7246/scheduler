@@ -1,7 +1,6 @@
 import React from "react";
 
 import DayList from "components/DayList";
-import Button from "components/Button";
 
 import Appointment from "components/Appointment";
 import {
@@ -25,6 +24,7 @@ export default function Application(props) {
   const interviewers = getIterviewersForDay(state, state.day);
 
   const appointments = getAppointmentsForDay(state, state.day);
+  const dashboardUrl = process.env.REACT_APP_DASHBOARD_URL;
 
   const schedule = appointments.map((oneAppointment) => {
     const interviewFound = getInterview(state, oneAppointment.interview);
@@ -51,12 +51,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <a className="sidebar__dashboard" href="http://localhost:9000/">
-            {/* <img
-              className="sidebar--image"
-              src="images/dashboard.jpg"
-              alt="Interview Scheduler"
-            /> */}
+          <a className="sidebar__dashboard" href={dashboardUrl}>
             Dashboard
           </a>
           <hr className="sidebar__separator2 sidebar--centered" />
